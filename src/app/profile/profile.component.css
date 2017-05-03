@@ -1,0 +1,27 @@
+.footer_profile {
+  border-top: 3px solid #EEE;
+  padding-top: 30px;
+}
+.logo img {
+  width: 180px;
+  height:180px;
+}
+
+label {
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+small {
+  font-size: 12px;
+}
+
+.email{
+  font-size: 17px;
+  font-weight: normal;
+}
+.img-circle {
+  border-radius: 50%;
+}
+

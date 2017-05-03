@@ -1,0 +1,16 @@
+<div class="container-fluid display-table">
+  <div class="row display-table-row">
+    <div class="col-md-3 col-sm-1 hidden-xs display-table-cell">
+      <cfp-navigation [menus]="menus" [user]="user"></cfp-navigation>
+    </div>
+    <div class="col-md-9 col-sm-11 display-table-cell">
+      <div class="row">
+        <header>
+          <div class="col-md-9">
+            <router-outlet></router-outlet>
+          </div>
+        </header>
+      </div>
+    </div>
+  </div>
+</div>

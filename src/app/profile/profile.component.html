@@ -1,0 +1,59 @@
+<section id="profile">
+  <div><h1>Profile</h1></div>
+  <form id="profile_form" [formGroup]="ProfileForm" (ngSubmit)="save()" class="form-group" novalidate>
+    <div class="container-fluid display-table">
+      <div [formGroup]="GeneralInfo">
+        <div class="row display-table-row">
+          <div class="col-md-4 col-sm-3 hidden-xs display-table-cell">
+            <div class="logo">
+              <img src="../assets/286.jpg"
+                   class="img-circle"/>
+            </div>
+          </div>
+          <div class="col-md-8 col-sm-9 display-table-cell form-group">
+            <label class="control-label">Email:</label>
+            <div class="email">
+              {{Email}}
+            </div>
+            <br/>
+            <div class="col-md-6 col-sm-6"><label>Name *</label><input type="text" class="form-control"
+                                                                       placeholder="Name"
+                                                                       formControlName="Name"></div>
+            <div class="col-md-6 col-sm-6"><label>Surname *</label><input type="text" class="form-control"
+                                                                          placeholder="Surname"
+                                                                          formControlName="Surname"></div>
+            <div class="checkbox-inline">
+              <label>
+                <input type="checkbox" formControlName="AllowImageUsage">
+                <small>You can use my picture to promote the event.*</small>
+              </label>
+            </div>
+            <br/>
+          </div>
+        </div>
+
+        <div class="row display-table-row">
+          <div class="col-md-9 col-sm-11 display-table-cell">
+            <label>Biography *</label>
+            <textarea formControlName="Biography" class="form-control" maxlength="600" name="biography"></textarea>
+            <small>600 characters max</small>
+            <br/>
+          </div>
+        </div>
+      </div>
+
+      <div [formGroup]="Agreement">
+        <div class="form-group">
+          <div class="row">
+            <div class="checkbox-inline col-sm-6"><input type="checkbox" formControlName="Agrees">
+              <small>I authorize Codemotion to send me information about the conference. *</small>
+            </div>
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-success pull-right">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
