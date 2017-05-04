@@ -1,0 +1,73 @@
+
+a:focus,a:hover,a{
+  outline:none;
+  text-decoration: none;
+}
+li,ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#navigation {
+  background: #0e1a35;
+}
+.logo {
+  text-align: center;
+}
+.logo img {
+  width: 60px;
+  height:60px;
+  padding: 16px 0 17px;
+}
+.logo span {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 0 20px 0 15px;
+  text-decoration: none;
+}
+#navigation{
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.menu a {
+  border-bottom: 1px solid #0d172e;
+  border-top: 1px solid #0d172e;
+  color: #ffffff;
+  display: block;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 28px 20px;
+  text-decoration: none;
+}
+
+.menu i {
+  margin-right: 15px;
+  color: #5584ff;
+}
+.menu .active a {
+  background: #122143;
+  border-left: 5px solid #5584ff;
+  padding-left: 15px;
+}
+.menu a:hover {
+  background: #122143 none repeat scroll 0 0;
+  border-left: 5px solid #5584ff;
+  padding-left: 15px;
+}
+.circle-logo {
+  border-radius: 50%;
+  margin: 0 auto;
+  max-width: 30px !important;
+  text-align: center;
+}
+.hidden-xs{
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}

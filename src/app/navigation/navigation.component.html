@@ -1,0 +1,15 @@
+<div id="navigation">
+  <div class="logo">
+    <img class='circle-logo' src="{{user.file}}" alt="">
+    <span class="hidden-xs hidden-sm">{{user.name}}</span>
+  </div>
+  <div class="menu">
+    <ul>
+      <li role="presentation" *ngFor="let menu of menus" (click)="onRouteSelection(menu.route)"
+          [class.active]="isSelected(menu.route)">
+        <a><i class="{{menu.iconClass}}" aria-hidden="true"></i><span
+          class="hidden-xs hidden-sm">{{menu.name}}</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
