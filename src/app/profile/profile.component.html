@@ -1,55 +1,186 @@
 <section id="profile">
   <div><h1>Profile</h1></div>
+  <!--h2 *ngIf="user | async">{{ user | async | json }}</h2>
+  <h2 *ngIf="profile | async">{{ profile | async | json }}</h2-->
   <form id="profile_form" [formGroup]="ProfileForm" (ngSubmit)="save()" class="form-group" novalidate>
     <div class="container-fluid display-table">
-      <div [formGroup]="GeneralInfo">
-        <div class="row display-table-row">
-          <div class="col-md-4 col-sm-3 hidden-xs display-table-cell">
-            <div class="logo">
-              <img src="../assets/286.jpg"
-                   class="img-circle"/>
+      <div class="col-md-12 col-sm-11">
+        <div [formGroup]="GeneralInfo">
+          <div class="row display-table-row">
+            <div class="col-md-4 col-sm-3 hidden-xs display-table-cell">
+              <div class="logo">
+                <img src="../assets/286.jpg" [src]="(profile | async).profile.GeneralInfo?.file"
+                     class="img-circle"/>
+              </div>
+            </div>
+            <div class="col-md-8 col-sm-9 display-table-cell form-group">
+              <label class="control-label">Email:</label>
+              <div class="email">
+                {{(profile | async).profile.GeneralInfo?.Email}}
+              </div>
+              <br/>
+              <div class="col-md-6 col-sm-6"><label>Name *</label><input type="text" class="form-control"
+                                                                         placeholder="Name"
+                                                                         formControlName="Name" [value]="(profile | async).profile.GeneralInfo?.Name"></div>
+              <div class="col-md-6 col-sm-6"><label>Surname *</label><input type="text" class="form-control"
+                                                                            placeholder="Surname"
+                                                                            formControlName="Surname" [value]="(profile | async).profile.GeneralInfo?.Surname"></div>
+              <div class="checkbox-inline">
+                <label>
+                  <input type="checkbox" formControlName="AllowImageUsage" [checked]="(profile | async).profile.GeneralInfo?.AllowImageUsage">{{(profile | async).profile.GeneralInfo?.AllowImageUsage}}
+                  <small>You can use my picture to promote the event.*</small>
+                </label>
+              </div>
+              <br/>
             </div>
           </div>
-          <div class="col-md-8 col-sm-9 display-table-cell form-group">
-            <label class="control-label">Email:</label>
-            <div class="email">
-              {{Email}}
+
+          <div class="separator"></div>
+
+          <div class="row display-table-row">
+            <div class="col-md-9 col-sm-11 display-table-cell">
+              <label>Biography *</label>
+              <textarea formControlName="Biography" class="form-control" maxlength="600" name="biography" [value]="(profile | async).profile.GeneralInfo?.Biography"></textarea>
+              <small>600 characters max</small>
+              <br/>
             </div>
-            <br/>
-            <div class="col-md-6 col-sm-6"><label>Name *</label><input type="text" class="form-control"
-                                                                       placeholder="Name"
-                                                                       formControlName="Name"></div>
-            <div class="col-md-6 col-sm-6"><label>Surname *</label><input type="text" class="form-control"
-                                                                          placeholder="Surname"
-                                                                          formControlName="Surname"></div>
-            <div class="checkbox-inline">
-              <label>
-                <input type="checkbox" formControlName="AllowImageUsage">
-                <small>You can use my picture to promote the event.*</small>
-              </label>
-            </div>
-            <br/>
           </div>
         </div>
 
-        <div class="row display-table-row">
-          <div class="col-md-9 col-sm-11 display-table-cell">
-            <label>Biography *</label>
-            <textarea formControlName="Biography" class="form-control" maxlength="600" name="biography"></textarea>
-            <small>600 characters max</small>
-            <br/>
+
+        <div class="separator"></div>
+
+        <div [formGroup]="EmploymentInfo">
+          <div class="form-group">
+            <div class="row display-table-row">
+              <div class="col-md-5 col-sm-11 display-table-cell">
+                <div class="col-md-12 col-sm-11" formArrayName="Company">
+                  <div class="col-md-12 col-sm-11" *ngFor="let comp of Company.controls; let i = index">
+                    <label>Company *</label>
+                    <input type="text" placeholder="Company" class="form-control" [formControlName]="i" [id]="i">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-11 display-table-cell">
+                <div class="col-md-12 col-sm-11" formArrayName="Role">
+                  <div class="row display-table-row" *ngFor="let role of Role.controls; let i = index">
+                    <div class="col-md-10 col-sm-11 display-table-cell">
+                      <label>Role *</label>
+                      <input type="text" placeholder="Role" class="form-control" [formControlName]="i" [id]="i">
+                    </div>
+                    <div class="col-md-2 col-sm-1 display-table-cell">
+                      <button type="button" class="form-control btn btn-default employment-btn">X</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-3 display-table-cell">
+                <button (click)="addEmptyPosition()" type="button" class="form-control btn btn-warning employment-btn">Add Company +</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div [formGroup]="Agreement">
-        <div class="form-group">
-          <div class="row">
-            <div class="checkbox-inline col-sm-6"><input type="checkbox" formControlName="Agrees">
-              <small>I authorize Codemotion to send me information about the conference. *</small>
+        <div class="separator"></div>
+        <div [formGroup]="Social">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-5">
+                <label>Nationality * <input placeholder="Select" type="text" class="form-control" formControlName="Nationality" [value]="(profile | async).profile.Social?.Nationality"></label>
+              </div>
+              <div class="col-sm-5">
+                <label>Where are you based * <input placeholder="city - country" type="text" class="form-control"
+                                                                                                         formControlName="CityCountry" [value]="(profile | async).profile.Social?.CityCountry"></label>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <button type="submit" class="btn btn-success pull-right">Apply</button>
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Phone * <input placeholder="It won't be displayed on your profile" type="text"
+                                                                             class="form-control" formControlName="Phone" [value]="(profile | async).profile.Social?.Phone"></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Website <input placeholder="http://www.something.com" type="text" class="form-control"
+                                                                             formControlName="Website" [value]="(profile | async).profile.Social?.Website"></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <label>Twitter <input placeholder="@Username" type="text" class="form-control"
+                                                                             formControlName="Twitter" [value]="(profile | async).profile.Social?.Twitter"></label>
+              </div>
+              <div class="col-sm-5">
+                <label>LinkedIn <input placeholder="include http://" type="text" class="form-control"
+                                                                              formControlName="Linkedin" [value]="(profile | async).profile.Social?.Facebook"></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <label>Facebook <input placeholder="include http://" type="text" class="form-control"
+                                                                               formControlName="Facebook" [value]="(profile | async).profile.Social?.Linkedin"></label>
+              </div>
+              <div class="col-sm-5">
+                <label>Github / BitBucket <input placeholder="include http://" type="text" class="form-control"
+                                                                                                   formControlName="Git" [value]="(profile | async).profile.Social?.Git"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="separator"></div>
+        <div [formGroup]="Languages">
+          <div class="form-group">
+            <label>Languages in which you are confident to hold a speech</label>
+            <div class="row">
+              <div class="col-sm-5">
+                <label>Primary Language <input placeholder="Select" type="text" class="form-control"
+                                                                                               formControlName="Primary" [value]="(profile | async).profile.Languages?.Primary"></label>
+              </div>
+              <div class="col-sm-5">
+                <label>Secondary Language <input placeholder="Select" type="text" class="form-control"
+                                                                                                   formControlName="Secondary" [value]="(profile | async).profile.Languages?.Secondary"></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-5">
+                <label>Other<input placeholder="Select" type="text" class="form-control" formControlName="Third" [value]="(profile | async).profile.Languages?.Third"></label>
+              </div>
+              <div class="col-sm-5">
+                <label>Other<input placeholder="Select" type="text" class="form-control" formControlName="Fourth" [value]="(profile | async).profile.Languages?.Fourth"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="separator"></div>
+          <div [formGroup]="CommunityInfo">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-5">
+                  <label>Are you a member of communities?</label>
+                <div class="col-lg-2">
+                  <label class="radio-inline"><input type="radio" value="true" formControlName="IsCommunityMember" [checked]="(profile | async).profile.CommunityInfo?.IsCommunityMember">Yes</label>
+                  <label class="radio-inline"><input type="radio" value="false" formControlName="IsCommunityMember" [checked]="!(profile | async).profile.CommunityInfo?.IsCommunityMember">No</label>
+                </div>
+              </div>
+              <div class="col-sm-5 pull-right">
+                <label>Which one?</label>
+                <input type="text" class="form-control" placeholder="Community name" formControlName="Community" [value]="(profile | async).profile.CommunityInfo?.Community">
+                <small>Separate different communities name with comma.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div [formGroup]="Agreement">
+          <div class="form-group">
+            <div class="row">
+              <div class="checkbox-inline col-sm-6"><input type="checkbox" formControlName="Agrees" [checked]="(profile | async).profile.Agreement?.Agrees">
+                <small>I authorize Codemotion to send me information about the conference. *</small>
+              </div>
+              <div class="col-sm-6">
+                <button type="submit" class="btn btn-success pull-right">Apply</button>
+              </div>
             </div>
           </div>
         </div>

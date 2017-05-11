@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import {CanLoad, NavigationExtras, Route, Router} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
+import {select} from "@angular-redux/store";
 
 @Injectable()
 export class AuthenticationGuardService implements CanLoad {
+
+  @select('user') public user;
 
   constructor(private authService:AuthenticationService, private router:Router) { }
 
